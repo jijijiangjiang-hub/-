@@ -89,7 +89,7 @@ export default function LoadingPage() {
                   whileHover={{ y: -2, scale: 1.018 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span>点击进入</span>
+                  <span>&#28857;&#20987;&#36827;&#20837;</span>
                 </motion.button>
               </motion.section>
             )}

@@ -115,20 +115,24 @@ button {
 
 .glass-enter {
   position: relative;
-  border: 1px solid rgba(255, 244, 219, 0.36);
-  border-radius: 999px;
-  padding: 25px 76px;
-  min-width: min(500px, calc(100vw - 44px));
-  color: rgba(255, 206, 102, 0.98);
+  display: inline-grid;
+  place-items: center;
+  width: min(420px, calc(100vw - 52px));
+  min-height: 92px;
+  border: 1px solid rgba(255, 241, 202, 0.42);
+  border-radius: 30px;
+  padding: 24px 68px;
+  color: rgba(255, 211, 112, 0.98);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.08)),
-    rgba(38, 28, 17, 0.2);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.07) 48%, rgba(117, 81, 37, 0.1)),
+    rgba(24, 18, 12, 0.32);
   box-shadow:
-    0 30px 110px rgba(0, 0, 0, 0.58),
-    0 0 42px rgba(220, 166, 52, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.62),
-    inset 0 -1px 0 rgba(82, 52, 20, 0.5);
-  backdrop-filter: blur(24px) saturate(1.35);
+    0 30px 90px rgba(0, 0, 0, 0.55),
+    0 0 54px rgba(224, 170, 63, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.56),
+    inset 0 -20px 36px rgba(54, 33, 16, 0.2);
+  -webkit-backdrop-filter: blur(26px) saturate(1.5);
+  backdrop-filter: blur(26px) saturate(1.5);
   cursor: none;
   font-size: clamp(1.28rem, 2.4vw, 1.8rem);
   font-weight: 650;
@@ -144,9 +148,11 @@ button {
   position: absolute;
   inset: 1px;
   content: '';
-  border-radius: inherit;
-  background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.32), transparent 36%);
-  opacity: 0.72;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.4), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 54%);
+  opacity: 0.78;
   pointer-events: none;
 }
 
