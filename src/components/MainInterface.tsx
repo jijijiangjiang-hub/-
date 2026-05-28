@@ -67,12 +67,13 @@ function useViewport() {
 function getSceneRect(viewport: { width: number; height: number }) {
   const imageAspect = IMAGE_SIZE.width / IMAGE_SIZE.height;
   const isMobile = viewport.width < 760;
-  const coverScale = isMobile ? 1.06 : 1.16;
-  const width = Math.ceil(Math.max(viewport.width, viewport.height * imageAspect) * coverScale) + 12;
+  const rightCropPoint = isMobile ? 0.9 : 0.86;
+  const width = Math.ceil(Math.max(viewport.height * imageAspect, viewport.width / rightCropPoint));
   const height = width / imageAspect;
+  const left = Math.min(0, viewport.width - width * rightCropPoint);
 
   return {
-    left: Math.floor((viewport.width - width) / 2) - 8,
+    left,
     top: (viewport.height - height) / 2,
     width,
     height,
