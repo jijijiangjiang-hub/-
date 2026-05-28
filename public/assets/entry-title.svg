@@ -3,13 +3,13 @@
   <desc id="desc">A minimal gold cursive title line.</desc>
   <defs>
     <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#f8df96"/>
-      <stop offset="0.55" stop-color="#c89431"/>
-      <stop offset="1" stop-color="#f1cf78"/>
+      <stop offset="0" stop-color="#fff8df" stop-opacity="0.92"/>
+      <stop offset="0.5" stop-color="#d8c893" stop-opacity="0.82"/>
+      <stop offset="1" stop-color="#f0dfad" stop-opacity="0.9"/>
     </linearGradient>
     <filter id="soft-glow" x="-8%" y="-30%" width="116%" height="170%">
-      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#1a0f05" flood-opacity="0.45"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#e7bd5a" flood-opacity="0.22"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#120d09" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#f0dfad" flood-opacity="0.16"/>
     </filter>
   </defs>
   <text
@@ -18,16 +18,16 @@
     fill="url(#gold)"
     filter="url(#soft-glow)"
     text-anchor="middle"
-    font-family="'IM Fell English', 'Georgia', 'Times New Roman', serif"
-    font-size="108"
+    font-family="'Snell Roundhand', 'Bickham Script Pro', 'Brush Script MT', 'IM Fell English', 'Georgia', serif"
+    font-size="118"
     font-style="italic"
     font-weight="400"
-    letter-spacing="1.5">Welcome to Bobby's World</text>
+    letter-spacing="0.6">Welcome to Bobby's World</text>
   <path
     d="M404 180 C565 194 706 196 800 184 C894 172 1033 169 1196 181"
     fill="none"
     stroke="url(#gold)"
-    stroke-width="3"
+    stroke-width="2.2"
     stroke-linecap="round"
-    opacity="0.68"/>
+    opacity="0.44"/>
 </svg>

@@ -359,7 +359,7 @@ button {
 .main-character {
   position: absolute;
   left: 50%;
-  bottom: clamp(32px, 6vh, 72px);
+  bottom: -1px;
   z-index: 58;
   width: min(32vw, 400px);
   min-width: 280px;
@@ -558,7 +558,7 @@ button {
   .main-character {
     width: min(64vw, 330px);
     min-width: 260px;
-    bottom: 4px;
+    bottom: -1px;
   }
 
   .frame-hotspot {

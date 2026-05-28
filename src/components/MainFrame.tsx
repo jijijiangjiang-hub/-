@@ -37,16 +37,12 @@ const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${file
 
 export default function MainFrame({
   item,
-  index,
   box,
-  isHovered,
   isLaunching,
   onHover,
   onClick,
   onLaunchComplete,
 }: MainFrameProps) {
-  const breatheDuration = 6.4 + index * 0.7;
-  const breatheDelay = index * 0.8;
   const fallDistance = Math.max(320, window.innerHeight - box.top - box.height * 0.18);
   const upperDrop = -box.top - box.height * 1.4;
   const finalDrop = window.innerHeight * 0.1 - box.top;
@@ -64,7 +60,7 @@ export default function MainFrame({
           '--frame-accent': item.accent,
         } as CSSProperties
       }
-      initial={{ y: 28, opacity: 0, scale: 0.98 }}
+      initial={false}
       animate={
         isLaunching
           ? {
@@ -78,12 +74,12 @@ export default function MainFrame({
               opacity: 1,
               x: 0,
               y: 0,
-              scale: isHovered ? 1.025 : 1,
-              rotate: isHovered ? -0.7 : 0,
+              scale: 1,
+              rotate: 0,
             }
       }
       transition={{
-        delay: isLaunching ? 0 : 0.45 + index * 0.08,
+        delay: 0,
         duration: isLaunching ? 1.72 : 0.7,
         ease: isLaunching ? [0.76, 0, 0.24, 1] : [0.16, 1, 0.3, 1],
         times: isLaunching ? [0, 0.34, 0.52, 1] : undefined,
@@ -96,16 +92,7 @@ export default function MainFrame({
       }}
       aria-label={`打开${item.label}`}
     >
-      <motion.div
-        className="frame-breath"
-        animate={undefined}
-        transition={{
-          duration: breatheDuration,
-          delay: breatheDelay,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
-      >
+      <div className="frame-breath">
         <div className="frame-hover-glow" />
         <img
           src={assetUrl(item.frameAsset)}
@@ -113,7 +100,7 @@ export default function MainFrame({
           draggable={false}
           className="frame-slice"
         />
-      </motion.div>
+      </div>
     </motion.button>
   );
 }

@@ -71,7 +71,6 @@ export default function MainCharacter() {
       className="main-character"
       style={{ x: '-50%' }}
       animate={{
-        y: [0, -4, 1, -3, 0],
         rotate: [0, 0.13, -0.08, 0.06, 0],
         scale: [1, 1.005, 1.002, 1.006, 1],
       }}
