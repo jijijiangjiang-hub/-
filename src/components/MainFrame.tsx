@@ -20,6 +20,12 @@ export interface FrameBox {
   top: number;
   width: number;
   height: number;
+  nativeCrop?: {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  };
 }
 
 interface MainFrameProps {
@@ -93,13 +99,23 @@ export default function MainFrame({
       aria-label={`打开${item.label}`}
     >
       <div className="frame-breath">
+        {box.nativeCrop ? (
+          <img
+            src={assetUrl('main-bg.png')}
+            alt=""
+            draggable={false}
+            className="frame-native-slice"
+            style={box.nativeCrop as CSSProperties}
+          />
+        ) : (
+          <img
+            src={assetUrl(item.frameAsset)}
+            alt=""
+            draggable={false}
+            className="frame-slice"
+          />
+        )}
         <div className="frame-hover-glow" />
-        <img
-          src={assetUrl(item.frameAsset)}
-          alt=""
-          draggable={false}
-          className="frame-slice"
-        />
       </div>
     </motion.button>
   );

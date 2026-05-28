@@ -94,12 +94,22 @@ function getFrameBox(item: FrameItem, viewport: { width: number; height: number 
   }
 
   const rect = getSceneRect(viewport);
+  const left = rect.left + item.anchor.x * rect.width;
+  const top = rect.top + item.anchor.y * rect.height;
+  const width = item.anchor.width * rect.width;
+  const height = item.anchor.height * rect.height;
 
   return {
-    left: rect.left + item.anchor.x * rect.width,
-    top: rect.top + item.anchor.y * rect.height,
-    width: item.anchor.width * rect.width,
-    height: item.anchor.height * rect.height,
+    left,
+    top,
+    width,
+    height,
+    nativeCrop: {
+      left: rect.left - left,
+      top: rect.top - top,
+      width: rect.width,
+      height: rect.height,
+    },
   };
 }
 
