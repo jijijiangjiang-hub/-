@@ -15,7 +15,7 @@ const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'I',
     label: '\u6211\u7684\u5b66\u4e1a',
-    labelAsset: 'plaque-study.png',
+    frameAsset: 'frame-slice-study.png',
     subtitle: '\u6211\u7684\u5b66\u4e1a',
     anchor: { x: 0.157, y: 0.101, ...FRAME_SIZE },
     accent: '#9c542e',
@@ -23,7 +23,7 @@ const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'II',
     label: '\u6211\u7684\u5c65\u5386',
-    labelAsset: 'plaque-career.png',
+    frameAsset: 'frame-slice-career.png',
     subtitle: '\u6211\u7684\u5c65\u5386',
     anchor: { x: 0.335, y: 0.101, ...FRAME_SIZE },
     accent: '#2d6170',
@@ -31,7 +31,7 @@ const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'III',
     label: '\u65e5\u5e38\u751f\u6d3b',
-    labelAsset: 'plaque-life.png',
+    frameAsset: 'frame-slice-life.png',
     subtitle: '\u65e5\u5e38\u751f\u6d3b',
     anchor: { x: 0.498, y: 0.101, ...FRAME_SIZE },
     accent: '#bc8b2f',
@@ -39,7 +39,7 @@ const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'IV',
     label: '\u793e\u4ea4\u53ca\u9879\u76ee',
-    labelAsset: 'plaque-social.png',
+    frameAsset: 'frame-slice-social.png',
     subtitle: '\u793e\u4ea4\u53ca\u9879\u76ee',
     anchor: { x: 0.658, y: 0.101, ...FRAME_SIZE },
     accent: '#5c4f7c',
@@ -67,12 +67,12 @@ function useViewport() {
 function getSceneRect(viewport: { width: number; height: number }) {
   const imageAspect = IMAGE_SIZE.width / IMAGE_SIZE.height;
   const isMobile = viewport.width < 760;
-  const coverScale = isMobile ? 1 : 1.04;
-  const width = Math.max(viewport.width, viewport.height * imageAspect) * coverScale;
+  const coverScale = isMobile ? 1.03 : 1.08;
+  const width = Math.ceil(Math.max(viewport.width, viewport.height * imageAspect) * coverScale) + 4;
   const height = width / imageAspect;
 
   return {
-    left: (viewport.width - width) / 2,
+    left: Math.floor((viewport.width - width) / 2) - 2,
     top: (viewport.height - height) / 2,
     width,
     height,

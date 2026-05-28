@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 export interface FrameItem {
   title: string;
   label: string;
-  labelAsset: string;
+  frameAsset: string;
   subtitle: string;
   accent: string;
   anchor: {
@@ -96,15 +96,9 @@ export default function MainFrame({
       }}
       aria-label={`打开${item.label}`}
     >
-      <img
-        src={assetUrl(item.labelAsset)}
-        alt={item.label}
-        draggable={false}
-        className="frame-plaque"
-      />
       <motion.div
         className="frame-breath"
-        animate={isLaunching ? undefined : { y: [0, -3, 1, -2, 0], rotate: [0, 0.18, -0.12, 0.08, 0] }}
+        animate={undefined}
         transition={{
           duration: breatheDuration,
           delay: breatheDelay,
@@ -112,15 +106,12 @@ export default function MainFrame({
           ease: 'easeInOut',
         }}
       >
-        <div className="frame-inner">
-          <span>{item.title}</span>
-        </div>
         <div className="frame-hover-glow" />
         <img
-          src={assetUrl('frame.png')}
+          src={assetUrl(item.frameAsset)}
           alt=""
           draggable={false}
-          className="frame-chrome"
+          className="frame-slice"
         />
       </motion.div>
     </motion.button>

@@ -109,10 +109,10 @@ button {
 }
 
 .loading-kicker {
-  width: min(820px, 90vw);
+  width: min(760px, 86vw);
   filter:
-    drop-shadow(0 0 18px rgba(197, 145, 45, 0.18))
-    drop-shadow(0 10px 20px rgba(0, 0, 0, 0.34));
+    drop-shadow(0 0 10px rgba(197, 145, 45, 0.12))
+    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.26));
 }
 
 .loading-title-image {
@@ -327,51 +327,10 @@ button {
   pointer-events: none;
 }
 
-.frame-plaque {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% - 13px);
-  z-index: 5;
-  display: block;
-  width: auto;
-  height: clamp(64px, 8vh, 92px);
-  max-width: 132%;
-  object-fit: contain;
-  transform: translateX(-50%) rotate(-0.7deg);
-  filter:
-    drop-shadow(0 6px 7px rgba(31, 18, 8, 0.38))
-    drop-shadow(0 1px 0 rgba(255, 237, 186, 0.18));
-  pointer-events: none;
-  user-select: none;
-}
-
-.frame-hotspot:nth-of-type(even) .frame-plaque {
-  transform: translateX(-50%) rotate(0.9deg);
-}
-
 .frame-breath {
   position: absolute;
   inset: 0;
-  filter: drop-shadow(0 12px 20px rgba(22, 14, 8, 0.34));
-}
-
-.frame-inner {
-  position: absolute;
-  inset: 12% 10% 13%;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 20%, rgba(255, 249, 230, 0.16), transparent 40%),
-    linear-gradient(180deg, rgba(20, 15, 10, 0.34), rgba(12, 9, 6, 0.64));
-}
-
-.frame-inner span {
-  color: rgba(247, 235, 210, 0.64);
-  font-family: 'IM Fell English', serif;
-  font-size: clamp(1rem, 2vw, 2.2rem);
-  letter-spacing: 0.18em;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.72);
+  filter: drop-shadow(0 7px 14px rgba(22, 14, 8, 0.16));
 }
 
 .frame-hover-glow {
@@ -387,7 +346,7 @@ button {
   opacity: 0.72;
 }
 
-.frame-chrome {
+.frame-slice {
   position: absolute;
   inset: 0;
   width: 100%;
