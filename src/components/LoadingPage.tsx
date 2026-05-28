@@ -70,26 +70,37 @@ export default function LoadingPage() {
                 exit={{ opacity: 0, y: -18, filter: 'blur(12px)' }}
                 transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               >
-                <motion.p
+                <motion.div
                   className="loading-kicker"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.35, duration: 1.1 }}
                 >
-                  &#27426;&#36814;&#26469;&#21040; Bobby&apos;s world
-                </motion.p>
+                  <img
+                    src={assetUrl('entry-title.png')}
+                    alt="&#27426;&#36814;&#26469;&#21040; Bobby's world"
+                    className="loading-title-image"
+                    draggable={false}
+                  />
+                </motion.div>
 
                 <motion.button
                   type="button"
                   onClick={handleEnter}
                   className="glass-enter"
+                  aria-label="&#28857;&#20987;&#36827;&#20837;&#25105;&#30340;&#35760;&#24518;"
                   initial={{ opacity: 0, y: 20, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: 0.95, duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{ y: -2, scale: 1.018 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span>&#28857;&#20987;&#36827;&#20837;</span>
+                  <img
+                    src={assetUrl('enter-memory.png')}
+                    alt=""
+                    className="enter-memory-image"
+                    draggable={false}
+                  />
                 </motion.button>
               </motion.section>
             )}

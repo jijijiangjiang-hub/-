@@ -109,24 +109,29 @@ button {
 }
 
 .loading-kicker {
-  color: rgba(236, 218, 184, 0.72);
-  font-size: clamp(1.32rem, 3.1vw, 3rem);
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-shadow:
-    0 0 24px rgba(197, 145, 45, 0.24),
-    0 2px 12px rgba(0, 0, 0, 0.42);
+  width: min(780px, 88vw);
+  filter:
+    drop-shadow(0 0 18px rgba(197, 145, 45, 0.18))
+    drop-shadow(0 10px 20px rgba(0, 0, 0, 0.34));
+}
+
+.loading-title-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
 }
 
 .glass-enter {
   position: relative;
   display: inline-grid;
   place-items: center;
-  width: min(420px, calc(100vw - 52px));
-  min-height: 92px;
+  width: min(540px, calc(100vw - 52px));
+  min-height: 104px;
   border: 1px solid rgba(255, 241, 202, 0.42);
   border-radius: 30px;
-  padding: 24px 68px;
+  padding: 22px 54px;
   color: rgba(255, 211, 112, 0.98);
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035) 48%, rgba(117, 81, 37, 0.055)),
@@ -177,9 +182,15 @@ button {
   transform: translateX(70%) rotate(8deg);
 }
 
-.glass-enter span {
+.enter-memory-image {
   position: relative;
   z-index: 1;
+  display: block;
+  width: min(390px, calc(100vw - 112px));
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px rgba(238, 190, 90, 0.22));
 }
 
 .loading-whisper {
