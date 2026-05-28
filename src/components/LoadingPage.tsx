@@ -76,7 +76,7 @@ export default function LoadingPage() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.35, duration: 1.1 }}
                 >
-                  BOBBY'S WORLD
+                  &#27426;&#36814;&#26469;&#21040; Bobby&apos;s world
                 </motion.p>
 
                 <motion.button

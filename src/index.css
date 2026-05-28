@@ -95,7 +95,7 @@ button {
   z-index: 2;
   display: grid;
   justify-items: center;
-  gap: 34px;
+  gap: 42px;
   padding: 24px;
   text-align: center;
 }
@@ -109,8 +109,13 @@ button {
 }
 
 .loading-kicker {
-  color: rgba(232, 213, 183, 0.58);
-  font-size: clamp(0.76rem, 1.2vw, 1rem);
+  color: rgba(236, 218, 184, 0.72);
+  font-size: clamp(1.32rem, 3.1vw, 3rem);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-shadow:
+    0 0 24px rgba(197, 145, 45, 0.24),
+    0 2px 12px rgba(0, 0, 0, 0.42);
 }
 
 .glass-enter {
@@ -124,19 +129,21 @@ button {
   padding: 24px 68px;
   color: rgba(255, 211, 112, 0.98);
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.07) 48%, rgba(117, 81, 37, 0.1)),
-    rgba(24, 18, 12, 0.32);
+    linear-gradient(145deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035) 48%, rgba(117, 81, 37, 0.055)),
+    rgba(24, 18, 12, 0.12);
   box-shadow:
     0 30px 90px rgba(0, 0, 0, 0.55),
     0 0 54px rgba(224, 170, 63, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.56),
-    inset 0 -20px 36px rgba(54, 33, 16, 0.2);
-  -webkit-backdrop-filter: blur(26px) saturate(1.5);
-  backdrop-filter: blur(26px) saturate(1.5);
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -18px 34px rgba(54, 33, 16, 0.12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  backdrop-filter: blur(18px) saturate(1.3);
   cursor: none;
+  font-family: 'IM Fell English', 'Noto Serif SC', serif;
   font-size: clamp(1.28rem, 2.4vw, 1.8rem);
-  font-weight: 650;
-  letter-spacing: 0.2em;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.28em;
   line-height: 1.2;
   text-shadow:
     0 0 14px rgba(238, 190, 90, 0.42),
@@ -150,9 +157,9 @@ button {
   content: '';
   border-radius: 28px;
   background:
-    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.4), transparent 34%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 54%);
-  opacity: 0.78;
+    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.24), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 54%);
+  opacity: 0.58;
   pointer-events: none;
 }
 
@@ -199,11 +206,9 @@ button {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.18) 46%, rgba(0, 0, 0, 0.72) 100%),
-    repeating-radial-gradient(circle at 50% 50%, rgba(232, 213, 183, 0.08) 0 1px, transparent 1px 7px);
+  background-image: repeating-radial-gradient(circle at 50% 50%, rgba(232, 213, 183, 0.08) 0 1px, transparent 1px 7px);
   mix-blend-mode: overlay;
-  opacity: 0.58;
+  opacity: 0.28;
   animation: noisePulse 1.6s steps(4) infinite;
 }
 

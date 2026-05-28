@@ -8,7 +8,7 @@ const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${file
 const VORTEX_DURATION = 6600;
 const BLACK_HOLD = 1000;
 const REVEAL_DURATION = 3900;
-const PUPIL = new THREE.Vector2(0.445, 0.675);
+const PUPIL = new THREE.Vector2(0.554, 0.747);
 
 const vertexShader = `
   varying vec2 vUv;
@@ -54,8 +54,8 @@ const fragmentShader = `
     float p = clamp(uProgress, 0.0, 1.0);
     float focusP = easeInOutCubic(smoothstep(0.0, 0.38, p));
     float zoomP = easeInOutCubic(smoothstep(0.02, 0.43, p));
-    float vortexP = clamp((p - 0.43) / 0.31, 0.0, 1.0);
-    float swallowP = smoothstep(0.72, 1.0, p);
+    float vortexP = smoothstep(0.42, 0.9, p);
+    float swallowP = vortexP;
 
     vec2 screenUv = coverUv(vUv);
     vec2 focus = mix(vec2(0.5), uPupil, focusP);
@@ -83,7 +83,7 @@ const fragmentShader = `
     float blackMask = smoothstep(blackRadius - 0.18, blackRadius, length(screenCenter));
     color.rgb = mix(color.rgb, vec3(0.0), blackMask);
 
-    float finalBlack = smoothstep(0.96, 1.0, p);
+    float finalBlack = smoothstep(0.9, 1.0, p);
     color.rgb = mix(color.rgb, vec3(0.0), finalBlack);
 
     float noise = (grain(vUv * uResolution + p * 400.0) - 0.5) * 0.08;
