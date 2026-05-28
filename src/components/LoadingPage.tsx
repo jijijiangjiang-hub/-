@@ -77,7 +77,7 @@ export default function LoadingPage() {
                   transition={{ delay: 0.35, duration: 1.1 }}
                 >
                   <img
-                    src={assetUrl('entry-title.png')}
+                    src={assetUrl('entry-title.svg')}
                     alt="&#27426;&#36814;&#26469;&#21040; Bobby's world"
                     className="loading-title-image"
                     draggable={false}

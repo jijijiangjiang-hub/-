@@ -9,34 +9,39 @@ import type { FrameBox, FrameItem } from './MainFrame';
 const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${fileName}`;
 
 const IMAGE_SIZE = { width: 1796, height: 876 };
+const FRAME_SIZE = { width: 0.166, height: 0.404 };
 
 const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'I',
-    label: '我的学业',
-    subtitle: '我的学业',
-    anchor: { x: 0.155, y: 0.1, width: 0.181, height: 0.418 },
+    label: '\u6211\u7684\u5b66\u4e1a',
+    labelAsset: 'plaque-study.png',
+    subtitle: '\u6211\u7684\u5b66\u4e1a',
+    anchor: { x: 0.157, y: 0.101, ...FRAME_SIZE },
     accent: '#9c542e',
   },
   {
     title: 'II',
-    label: '工作履历',
-    subtitle: '工作履历',
-    anchor: { x: 0.335, y: 0.1, width: 0.181, height: 0.418 },
+    label: '\u6211\u7684\u5c65\u5386',
+    labelAsset: 'plaque-career.png',
+    subtitle: '\u6211\u7684\u5c65\u5386',
+    anchor: { x: 0.335, y: 0.101, ...FRAME_SIZE },
     accent: '#2d6170',
   },
   {
     title: 'III',
-    label: '兴趣爱好',
-    subtitle: '兴趣爱好',
-    anchor: { x: 0.499, y: 0.1, width: 0.181, height: 0.418 },
+    label: '\u65e5\u5e38\u751f\u6d3b',
+    labelAsset: 'plaque-life.png',
+    subtitle: '\u65e5\u5e38\u751f\u6d3b',
+    anchor: { x: 0.498, y: 0.101, ...FRAME_SIZE },
     accent: '#bc8b2f',
   },
   {
     title: 'IV',
-    label: '社交平台',
-    subtitle: '社交平台',
-    anchor: { x: 0.666, y: 0.1, width: 0.181, height: 0.418 },
+    label: '\u793e\u4ea4\u53ca\u9879\u76ee',
+    labelAsset: 'plaque-social.png',
+    subtitle: '\u793e\u4ea4\u53ca\u9879\u76ee',
+    anchor: { x: 0.658, y: 0.101, ...FRAME_SIZE },
     accent: '#5c4f7c',
   },
 ];

@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 export interface FrameItem {
   title: string;
   label: string;
+  labelAsset: string;
   subtitle: string;
   accent: string;
   anchor: {
@@ -95,7 +96,12 @@ export default function MainFrame({
       }}
       aria-label={`打开${item.label}`}
     >
-      <span className="frame-title">{item.label}</span>
+      <img
+        src={assetUrl(item.labelAsset)}
+        alt={item.label}
+        draggable={false}
+        className="frame-plaque"
+      />
       <motion.div
         className="frame-breath"
         animate={isLaunching ? undefined : { y: [0, -3, 1, -2, 0], rotate: [0, 0.18, -0.12, 0.08, 0] }}
