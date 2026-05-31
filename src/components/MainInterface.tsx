@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
 import MainFrame from './MainFrame';
 import MainCharacter from './MainCharacter';
+import StudyDetailPage from './StudyDetailPage';
 import type { FrameBox, FrameItem } from './MainFrame';
 
 const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${fileName}`;
@@ -194,7 +195,11 @@ export default function MainInterface() {
 
           <AnimatePresence>
             {activeFrame !== null && (
-              <DetailPage item={FRAME_ITEMS[activeFrame]} onClose={() => setActiveFrame(null)} />
+              activeFrame === 0 ? (
+                <StudyDetailPage item={FRAME_ITEMS[activeFrame]} onClose={() => setActiveFrame(null)} />
+              ) : (
+                <DetailPage item={FRAME_ITEMS[activeFrame]} onClose={() => setActiveFrame(null)} />
+              )
             )}
           </AnimatePresence>
         </motion.div>

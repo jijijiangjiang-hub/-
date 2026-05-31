@@ -20,6 +20,10 @@ export default function CustomCursor() {
     const previous = { ...target };
 
     const render = () => {
+      const detailOpen = Boolean(document.querySelector('.detail-page'));
+      cursor.classList.toggle('is-hidden', detailOpen);
+      document.documentElement.classList.toggle('detail-cursor-visible', detailOpen);
+
       current.x += (target.x - current.x) * 0.28;
       current.y += (target.y - current.y) * 0.28;
 
@@ -56,6 +60,7 @@ export default function CustomCursor() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      document.documentElement.classList.remove('detail-cursor-visible');
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mousedown', onDown);
       window.removeEventListener('mouseup', onUp);
