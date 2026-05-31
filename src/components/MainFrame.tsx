@@ -7,7 +7,7 @@ export interface FrameItem {
   frameAsset: string;
   subtitle: string;
   accent: string;
-  anchor: {
+  frameBounds: {
     x: number;
     y: number;
     width: number;
@@ -20,7 +20,7 @@ export interface FrameBox {
   top: number;
   width: number;
   height: number;
-  nativeCrop?: {
+  imageRect: {
     left: number;
     top: number;
     width: number;
@@ -99,22 +99,13 @@ export default function MainFrame({
       aria-label={`打开${item.label}`}
     >
       <div className="frame-breath">
-        {box.nativeCrop ? (
-          <img
-            src={assetUrl('main-bg.png')}
-            alt=""
-            draggable={false}
-            className="frame-native-slice"
-            style={box.nativeCrop as CSSProperties}
-          />
-        ) : (
-          <img
-            src={assetUrl(item.frameAsset)}
-            alt=""
-            draggable={false}
-            className="frame-slice"
-          />
-        )}
+        <img
+          src={assetUrl(item.frameAsset)}
+          alt=""
+          draggable={false}
+          className="frame-slice"
+          style={box.imageRect as CSSProperties}
+        />
         <div className="frame-hover-glow" />
       </div>
     </motion.button>

@@ -275,6 +275,7 @@ button {
   inset: 0;
   width: 100%;
   height: 100%;
+  max-width: none;
   object-position: center center;
   user-select: none;
   pointer-events: none;
@@ -353,16 +354,6 @@ button {
 }
 
 .frame-slice {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: fill;
-  pointer-events: none;
-  user-select: none;
-}
-
-.frame-native-slice {
   position: absolute;
   max-width: none;
   object-fit: fill;

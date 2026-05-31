@@ -9,39 +9,38 @@ import type { FrameBox, FrameItem } from './MainFrame';
 const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${fileName}`;
 
 const IMAGE_SIZE = { width: 1796, height: 876 };
-const FRAME_SIZE = { width: 0.166, height: 0.404 };
 
 const FRAME_ITEMS: FrameItem[] = [
   {
     title: 'I',
     label: '\u6211\u7684\u5b66\u4e1a',
-    frameAsset: 'frame-slice-study.png',
+    frameAsset: 'main-frame-study.png',
     subtitle: '\u6211\u7684\u5b66\u4e1a',
-    anchor: { x: 0.157, y: 0.101, ...FRAME_SIZE },
+    frameBounds: { x: 283, y: 85, width: 299, height: 358 },
     accent: '#9c542e',
   },
   {
     title: 'II',
     label: '\u6211\u7684\u5c65\u5386',
-    frameAsset: 'frame-slice-career.png',
+    frameAsset: 'main-frame-career.png',
     subtitle: '\u6211\u7684\u5c65\u5386',
-    anchor: { x: 0.335, y: 0.101, ...FRAME_SIZE },
+    frameBounds: { x: 596, y: 88, width: 284, height: 356 },
     accent: '#2d6170',
   },
   {
     title: 'III',
     label: '\u65e5\u5e38\u751f\u6d3b',
-    frameAsset: 'frame-slice-life.png',
+    frameAsset: 'main-frame-life.png',
     subtitle: '\u65e5\u5e38\u751f\u6d3b',
-    anchor: { x: 0.498, y: 0.101, ...FRAME_SIZE },
+    frameBounds: { x: 890, y: 89, width: 279, height: 357 },
     accent: '#bc8b2f',
   },
   {
     title: 'IV',
     label: '\u793e\u4ea4\u53ca\u9879\u76ee',
-    frameAsset: 'frame-slice-social.png',
+    frameAsset: 'main-frame-social.png',
     subtitle: '\u793e\u4ea4\u53ca\u9879\u76ee',
-    anchor: { x: 0.658, y: 0.101, ...FRAME_SIZE },
+    frameBounds: { x: 1167, y: 90, width: 285, height: 358 },
     accent: '#5c4f7c',
   },
 ];
@@ -77,6 +76,20 @@ function getSceneRect(viewport: { width: number; height: number }) {
     top: (viewport.height - height) / 2,
     width,
     height,
+    right: 'auto',
+    bottom: 'auto',
+  };
+}
+
+function getFrameImageRect(item: FrameItem, width: number, height: number) {
+  const scaleX = width / item.frameBounds.width;
+  const scaleY = height / item.frameBounds.height;
+
+  return {
+    left: -item.frameBounds.x * scaleX,
+    top: -item.frameBounds.y * scaleY,
+    width: IMAGE_SIZE.width * scaleX,
+    height: IMAGE_SIZE.height * scaleY,
   };
 }
 
@@ -84,32 +97,29 @@ function getFrameBox(item: FrameItem, viewport: { width: number; height: number 
   if (viewport.width < 760) {
     const gap = 14;
     const width = Math.min(136, (viewport.width - 54 - gap) / 2);
-    const height = width * (1152 / 923);
+    const height = width * (item.frameBounds.height / item.frameBounds.width);
     const column = index % 2;
     const row = Math.floor(index / 2);
     const left = (viewport.width - width * 2 - gap) / 2 + column * (width + gap);
     const top = Math.max(64, viewport.height * 0.08) + row * (height + 16);
 
-    return { left, top, width, height };
+    return { left, top, width, height, imageRect: getFrameImageRect(item, width, height) };
   }
 
   const rect = getSceneRect(viewport);
-  const left = rect.left + item.anchor.x * rect.width;
-  const top = rect.top + item.anchor.y * rect.height;
-  const width = item.anchor.width * rect.width;
-  const height = item.anchor.height * rect.height;
+  const scaleX = rect.width / IMAGE_SIZE.width;
+  const scaleY = rect.height / IMAGE_SIZE.height;
+  const left = rect.left + item.frameBounds.x * scaleX;
+  const top = rect.top + item.frameBounds.y * scaleY;
+  const width = item.frameBounds.width * scaleX;
+  const height = item.frameBounds.height * scaleY;
 
   return {
     left,
     top,
     width,
     height,
-    nativeCrop: {
-      left: rect.left - left,
-      top: rect.top - top,
-      width: rect.width,
-      height: rect.height,
-    },
+    imageRect: getFrameImageRect(item, width, height),
   };
 }
 
