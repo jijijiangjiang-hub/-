@@ -18,6 +18,25 @@ dist-ssr
 /bobby_v3.html
 /*.png
 /*.mp4
+/action-composites/
+/图片素材库/
+/学业和履历信息/
+/日常生活/
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+credentials.*
+service-account*.json
 
 # Editor directories and files
 .vscode/*

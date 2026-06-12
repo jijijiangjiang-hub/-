@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { CSSProperties } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
 import MainFrame from './MainFrame';
-import MainCharacter from './MainCharacter';
+import MainAudioDeck from './MainAudioDeck';
 import StudyDetailPage from './StudyDetailPage';
 import type { FrameBox, FrameItem } from './MainFrame';
 
@@ -164,6 +163,7 @@ export default function MainInterface() {
             draggable={false}
           />
           <div className="main-vignette" />
+          <MainAudioDeck sceneRect={sceneRect} isEnabled={phase === 'main'} />
 
           <motion.div
             className="site-mark"
@@ -191,53 +191,17 @@ export default function MainInterface() {
             />
           ))}
 
-          <MainCharacter />
-
           <AnimatePresence>
             {activeFrame !== null && (
-              activeFrame === 0 ? (
-                <StudyDetailPage item={FRAME_ITEMS[activeFrame]} onClose={() => setActiveFrame(null)} />
-              ) : (
-                <DetailPage item={FRAME_ITEMS[activeFrame]} onClose={() => setActiveFrame(null)} />
-              )
+              <StudyDetailPage
+                key={FRAME_ITEMS[activeFrame].label}
+                item={FRAME_ITEMS[activeFrame]}
+                onClose={() => setActiveFrame(null)}
+              />
             )}
           </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>
-  );
-}
-
-function DetailPage({ item, onClose }: { item: FrameItem; onClose: () => void }) {
-  return (
-    <motion.section
-      className="detail-page"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.55, ease: 'easeOut' }}
-      style={{ '--detail-accent': item.accent } as CSSProperties}
-    >
-      <img src={assetUrl('main-bg.png')} alt="" className="detail-bg" draggable={false} />
-      <div className="detail-scrim" />
-
-      <button type="button" className="detail-back" onClick={onClose}>
-        返回
-      </button>
-
-      <motion.div
-        className="detail-copy"
-        initial={{ y: 36, opacity: 0, filter: 'blur(10px)' }}
-        animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-        exit={{ y: 24, opacity: 0, filter: 'blur(10px)' }}
-        transition={{ delay: 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <p className="detail-number">{item.title}</p>
-        <h2>{item.subtitle}</h2>
-        <p>
-          这里先放入这一栏目的叙事骨架。下一步你给我具体素材或文字后，我会把它整理成完整的个人页面内容。
-        </p>
-      </motion.div>
-    </motion.section>
   );
 }

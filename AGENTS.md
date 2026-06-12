@@ -31,8 +31,8 @@ http://127.0.0.1:5173/
 - `src/components/EyeTransition.tsx`: eye and vortex transition from intro to main room.
 - `src/components/MainInterface.tsx`: main room background, four frame hotspots, and detail routing.
 - `src/components/MainFrame.tsx`: clickable frame overlay and launch animation.
-- `src/components/MainCharacter.tsx`: torso plus left/right arm pointer behavior.
-- `src/components/StudyDetailPage.tsx`: study detail page with parchment and quill writing animation.
+- `src/components/MainCharacter.tsx`: canvas-rendered torso/arm pointer behavior with generated back and shoulder socket cover assets.
+- `src/components/StudyDetailPage.tsx`: shared parchment and quill detail page used by all four frame sections.
 - `src/components/CustomCursor.tsx`: oil-brush cursor.
 
 The main background source size is `1796x876`. Frame overlay alignment depends on the `FRAME_ITEMS.frameBounds` values in `MainInterface.tsx`; change those carefully and verify visually.
@@ -44,11 +44,26 @@ Use the processed web assets in `public/assets/` from code. Raw source folders w
 - `图片素材库/`
 - `学业和履历信息/`
 - `日常生活/`
+- `action-composites/`
 
-The current study detail assets are:
+The current detail page assets are:
 
 - `public/assets/parchment-paper.png`
 - `public/assets/quill-pen.png`
+
+The current character cover assets are:
+
+- `public/assets/character-back-extended.png`
+- `public/assets/character-left-shoulder-wedge.png`
+- `public/assets/character-right-shoulder-wedge.png`
+
+The current life gallery assets are:
+
+- `public/assets/life-fishing-catch.jpg`
+- `public/assets/life-riverside-dog.jpg`
+- `public/assets/life-dog-closeup.jpg`
+- `public/assets/life-fishing-portrait.jpg`
+- `public/assets/life-boat-fishing.jpg`
 
 ## Git And Publishing
 
@@ -80,4 +95,6 @@ There may be local-only or user-created changes in the workspace. Before staging
 - As of 2026-06-01, the last deployed content is `9dec14c Use parchment and quill assets`.
 - A prior direct `git push` to `github.com:443` timed out, while `api.github.com` worked. If that recurs, use the GitHub API publish fallback and then align `.git-publish` to the remote commit.
 - `.github/workflows/deploy.yml` may show a newline-only local diff. Do not include it in unrelated commits.
-- The career, life, and social detail pages are placeholders; the study page is the reference implementation for parchment-style detail pages.
+- As of 2026-06-08 local workspace work, all four detail pages use the parchment-style `StudyDetailPage` and contain filled content: study, career, life, and social/projects. This local content has not necessarily been deployed.
+- `MainCharacter` is now a canvas rig with a wider transparent work area, full-arm rotation toward the cursor, and generated back/shoulder cover layers to reduce shoulder seams during pointer motion.
+- On this workstation, `npm`/`npx` may resolve to incomplete wrappers under `E:\姜极宸工作\coding` and fail with a missing `node_modules\npm\bin\npm-prefix.js`. Repair Node/npm before relying on `npm run ...`; local Vite can be invoked directly with `node node_modules\vite\bin\vite.js ...` as a temporary workaround.

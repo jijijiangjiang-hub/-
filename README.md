@@ -17,9 +17,9 @@ https://jijijiangjiang-hub.github.io/-/
   - `main-frame-career.png`
   - `main-frame-life.png`
   - `main-frame-social.png`
-- The central character uses separate `torso-base.png`, `hand-left.png`, and `hand-right.png` assets. The arm on the cursor side rotates toward the pointer.
-- The study detail page is the first detailed page. It uses `parchment-paper.png` and `quill-pen.png`, with per-character writing animation.
-- Career, life, and social detail pages are still placeholders.
+- The central character is drawn on a canvas from `torso-base.png`, `hand-left.png`, and `hand-right.png`, with generated back and shoulder cover assets to reduce seams while the cursor-side arm rotates.
+- All four frame detail pages share the parchment and quill experience.
+- The study, career, life, and social/project pages now contain filled content; the life page includes a small gallery from processed local photos.
 
 ## Development
 

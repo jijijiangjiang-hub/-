@@ -98,6 +98,9 @@ export default function MainFrame({
       }}
       aria-label={`打开${item.label}`}
     >
+      <span className="frame-title-label" aria-hidden="true">
+        {item.label}
+      </span>
       <div className="frame-breath">
         <img
           src={assetUrl(item.frameAsset)}

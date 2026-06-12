@@ -1,59 +1,33 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode, UIEvent } from 'react';
 import { motion } from 'framer-motion';
-import type { CSSProperties } from 'react';
+import {
+  DETAIL_CONTENT,
+  getGalleryPages,
+  type GalleryImage,
+  type SocialLink,
+} from '../data/detailContent';
+import { getScrollLineFocusState } from '../utils/scrollFocus';
 import type { FrameItem } from './MainFrame';
 
 const assetUrl = (fileName: string) => `${import.meta.env.BASE_URL}assets/${fileName}`;
-
-const STUDY_LINES = [
-  '教育背景',
-  '乌克兰哈尔科夫国立师范大学',
-  '经济学硕士  2022.06 - 2024.01',
-  '宁波大学科学与技术学院',
-  '工商管理本科（全日制）  2018.09 - 2020.06',
-  '宁波城市职业技术学院',
-  '金融大类（投资与理财）专科  2015.09 - 2018.06',
-  '从金融、管理到经济学研究，再进入 AI 招聘与个人项目实践。',
-];
-
-const STUDY_ARCHIVES = [
-  {
-    mark: 'M.A.',
-    title: '经济学硕士',
-    meta: '哈尔科夫国立师范大学',
-    years: '2022.06 - 2024.01',
-  },
-  {
-    mark: 'B.B.A.',
-    title: '工商管理本科',
-    meta: '宁波大学科学与技术学院',
-    years: '2018.09 - 2020.06',
-  },
-  {
-    mark: 'FIN.',
-    title: '投资与理财专科',
-    meta: '宁波城市职业技术学院',
-    years: '2015.09 - 2018.06',
-  },
-];
-
 const WRITING_INTERVAL = 42;
 
-function getVisibleLengthByLine(characterCount: number) {
+function getVisibleLengthByLine(lines: string[], characterCount: number) {
   let remaining = characterCount;
 
-  return STUDY_LINES.map((line) => {
+  return lines.map((line) => {
     const visibleLength = Math.max(0, Math.min(line.length, remaining));
     remaining -= line.length + 1;
     return visibleLength;
   });
 }
 
-function getWritingPosition(characterCount: number) {
+function getWritingPosition(lines: string[], characterCount: number) {
   let remaining = characterCount;
 
-  for (let index = 0; index < STUDY_LINES.length; index += 1) {
-    const line = STUDY_LINES[index];
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
     if (remaining <= line.length) {
       return {
         row: index,
@@ -64,7 +38,7 @@ function getWritingPosition(characterCount: number) {
     remaining -= line.length + 1;
   }
 
-  return { row: STUDY_LINES.length - 1, progress: 0.92 };
+  return { row: lines.length - 1, progress: 0.92 };
 }
 
 function renderWritingLine(line: string, visibleLength: number, rowIndex: number, activeRow: number) {
@@ -82,14 +56,106 @@ function renderWritingLine(line: string, visibleLength: number, rowIndex: number
   });
 }
 
-export default function StudyDetailPage({ item, onClose }: { item: FrameItem; onClose: () => void }) {
-  const totalCharacters = useMemo(
-    () => STUDY_LINES.reduce((sum, line) => sum + line.length + 1, 0),
-    [],
+function ParchmentPaper({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return (
+    <article className={['parchment-page', className].filter(Boolean).join(' ')}>
+      <img src={assetUrl('parchment-paper.png')} alt="" className="parchment-paper-image" draggable={false} />
+      <div className="parchment-inner">{children}</div>
+    </article>
   );
+}
+
+function GalleryPage({
+  images,
+  index,
+  total,
+}: {
+  images: GalleryImage[];
+  index: number;
+  total: number;
+}) {
+  const hasPortrait = images.some((image) => image.orientation === 'portrait');
+
+  return (
+    <ParchmentPaper className="parchment-page-gallery">
+      <div className="archive-heading life-gallery-heading">
+        <p>Gallery</p>
+        <span>
+          Life {index + 1} / {total}
+        </span>
+      </div>
+
+      <div
+        className={[
+          'life-gallery-page',
+          images.length === 1 ? 'is-single' : '',
+          hasPortrait ? 'has-portrait' : '',
+        ].filter(Boolean).join(' ')}
+      >
+        {images.map((image) => (
+          <figure
+            key={image.src}
+            className={[
+              'life-gallery-item',
+              image.orientation === 'portrait' ? 'is-portrait' : '',
+            ].filter(Boolean).join(' ')}
+          >
+            <img src={assetUrl(image.src)} alt={image.alt} draggable={false} />
+          </figure>
+        ))}
+      </div>
+    </ParchmentPaper>
+  );
+}
+
+function SocialLinks({ links, progress }: { links: SocialLink[]; progress: number }) {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>, link: SocialLink) => {
+    if (link.isPlaceholder) {
+      event.preventDefault();
+    }
+  };
+
+  return (
+    <div className="social-link-list" aria-label="社交平台入口">
+      {links.map((link, index) => (
+        <motion.a
+          key={link.id}
+          className={progress > 0.28 + index * 0.12 ? 'social-link-button is-revealed' : 'social-link-button'}
+          href={link.href}
+          onClick={(event) => handleClick(event, link)}
+          target={link.isPlaceholder ? undefined : '_blank'}
+          rel={link.isPlaceholder ? undefined : 'noreferrer'}
+          initial={false}
+          animate={{
+            opacity: progress > 0.28 + index * 0.12 ? 1 : 0,
+            y: progress > 0.28 + index * 0.12 ? 0 : 18,
+            filter: progress > 0.28 + index * 0.12 ? 'blur(0px)' : 'blur(8px)',
+          }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          aria-label={`${link.label}入口`}
+        >
+          <span>{link.label}</span>
+          <small>{link.meta}</small>
+        </motion.a>
+      ))}
+    </div>
+  );
+}
+
+export default function StudyDetailPage({ item, onClose }: { item: FrameItem; onClose: () => void }) {
+  const content = DETAIL_CONTENT[item.label] ?? DETAIL_CONTENT['我的学业'];
+  const isScrollReveal = content.revealMode === 'scroll';
+  const totalCharacters = useMemo(
+    () => content.lines.reduce((sum, line) => sum + line.length + 1, 0),
+    [content.lines],
+  );
+  const galleryPages = useMemo(() => getGalleryPages(content.gallery), [content.gallery]);
   const [writtenCharacters, setWrittenCharacters] = useState(0);
+  const [scrollRevealProgress, setScrollRevealProgress] = useState(0);
 
   useEffect(() => {
+    if (isScrollReveal) return undefined;
+
     const timer = window.setInterval(() => {
       setWrittenCharacters((current) => {
         if (current >= totalCharacters) {
@@ -102,11 +168,20 @@ export default function StudyDetailPage({ item, onClose }: { item: FrameItem; on
     }, WRITING_INTERVAL);
 
     return () => window.clearInterval(timer);
-  }, [totalCharacters]);
+  }, [isScrollReveal, totalCharacters]);
 
-  const visibleLengths = getVisibleLengthByLine(writtenCharacters);
-  const writingPosition = getWritingPosition(writtenCharacters);
-  const progress = writtenCharacters / totalCharacters;
+  const handleBookScroll = (event: UIEvent<HTMLDivElement>) => {
+    if (!isScrollReveal) return;
+
+    const target = event.currentTarget;
+    const maxScroll = target.scrollHeight - target.clientHeight;
+    setScrollRevealProgress(maxScroll > 0 ? target.scrollTop / maxScroll : 0);
+  };
+
+  const effectiveWrittenCharacters = isScrollReveal ? totalCharacters : writtenCharacters;
+  const visibleLengths = getVisibleLengthByLine(content.lines, effectiveWrittenCharacters);
+  const writingPosition = getWritingPosition(content.lines, effectiveWrittenCharacters);
+  const progress = isScrollReveal ? scrollRevealProgress : writtenCharacters / totalCharacters;
 
   return (
     <motion.section
@@ -125,39 +200,66 @@ export default function StudyDetailPage({ item, onClose }: { item: FrameItem; on
       </button>
 
       <motion.div
-        className="parchment-scroll parchment-book"
+        className={isScrollReveal ? 'parchment-scroll parchment-book is-scroll-experiment' : 'parchment-scroll parchment-book'}
+        onScroll={handleBookScroll}
         initial={{ y: 44, opacity: 0, rotateX: 8 }}
         animate={{ y: 0, opacity: 1, rotateX: 0 }}
         exit={{ y: 30, opacity: 0, filter: 'blur(8px)' }}
         transition={{ duration: 0.78, ease: [0.16, 1, 0.3, 1] }}
       >
-        <article className="parchment-page parchment-page-writing">
-          <img src={assetUrl('parchment-paper.png')} alt="" className="parchment-paper-image" draggable={false} />
-          <div className="parchment-inner">
-            <div className="parchment-heading">
-              <p>{item.title}</p>
-              <h2>{item.subtitle}</h2>
-              <span>Education Ledger</span>
-            </div>
+        <ParchmentPaper className={isScrollReveal ? 'parchment-page-writing parchment-page-scroll-writing' : 'parchment-page-writing'}>
+          <div className="parchment-heading">
+            <p>{item.title}</p>
+            <h2>{item.subtitle}</h2>
+            <span>{content.ledger}</span>
+          </div>
 
-            <div
-              className="study-writing-area"
-              style={
-                {
-                  '--quill-row': writingPosition.row,
-                  '--quill-progress': writingPosition.progress,
-                } as CSSProperties
+          <div
+            className={isScrollReveal ? 'study-writing-area career-scroll-writing' : 'study-writing-area'}
+            style={
+              {
+                '--quill-row': writingPosition.row,
+                '--quill-progress': writingPosition.progress,
+              } as CSSProperties
+            }
+          >
+            {content.lines.map((line, index) => {
+              if (isScrollReveal) {
+                const lineFocus = getScrollLineFocusState(index, content.lines.length, scrollRevealProgress);
+
+                return (
+                  <p
+                    key={line}
+                    className={[
+                      'study-line',
+                      index === 0 ? 'study-line-title' : '',
+                      'career-scroll-line',
+                      lineFocus.isFocusLine ? 'is-focus-line' : '',
+                    ].filter(Boolean).join(' ')}
+                    style={{
+                      '--line-emphasis': lineFocus.emphasis,
+                      opacity: lineFocus.opacity,
+                      transform: `translateY(${lineFocus.translateY}px) scale(${lineFocus.scale})`,
+                      filter: `blur(${lineFocus.blur}px)`,
+                      fontWeight: lineFocus.fontWeight,
+                    } as CSSProperties}
+                  >
+                    {line}
+                  </p>
+                );
               }
-            >
-              {STUDY_LINES.map((line, index) => (
+
+              return (
                 <p key={line} className={index === 0 ? 'study-line study-line-title' : 'study-line'}>
                   {renderWritingLine(line, visibleLengths[index], index, writingPosition.row)}
                   {index === writingPosition.row && writtenCharacters < totalCharacters ? (
                     <span className="ink-caret" />
                   ) : null}
                 </p>
-              ))}
+              );
+            })}
 
+            {isScrollReveal ? null : (
               <img
                 key={writtenCharacters}
                 src={assetUrl('quill-pen.png')}
@@ -165,20 +267,21 @@ export default function StudyDetailPage({ item, onClose }: { item: FrameItem; on
                 className={writtenCharacters >= totalCharacters ? 'quill-pen is-resting' : 'quill-pen'}
                 draggable={false}
               />
-            </div>
+            )}
           </div>
-        </article>
+        </ParchmentPaper>
 
-        <article className="parchment-page parchment-page-archive">
-          <img src={assetUrl('parchment-paper.png')} alt="" className="parchment-paper-image" draggable={false} />
-          <div className="parchment-inner">
-            <div className="archive-heading">
-              <p>Archive</p>
-              <span>Studies</span>
-            </div>
+        <ParchmentPaper className="parchment-page-archive">
+          <div className="archive-heading">
+            <p>{content.archiveTitle}</p>
+            <span>{content.archiveLabel}</span>
+          </div>
 
-            <div className="study-archives" aria-label="学业档案摘要">
-              {STUDY_ARCHIVES.map((archive, index) => (
+          {content.socialLinks ? (
+            <SocialLinks links={content.socialLinks} progress={progress} />
+          ) : (
+            <div className="study-archives" aria-label={`${item.label}档案摘要`}>
+              {content.archives.map((archive, index) => (
                 <motion.article
                   key={archive.title}
                   className={progress > 0.28 + index * 0.16 ? 'study-archive is-revealed' : 'study-archive'}
@@ -199,8 +302,12 @@ export default function StudyDetailPage({ item, onClose }: { item: FrameItem; on
                 </motion.article>
               ))}
             </div>
-          </div>
-        </article>
+          )}
+        </ParchmentPaper>
+
+        {galleryPages.map((page, index) => (
+          <GalleryPage key={`gallery-${index}`} images={page} index={index} total={galleryPages.length} />
+        ))}
       </motion.div>
     </motion.section>
   );
